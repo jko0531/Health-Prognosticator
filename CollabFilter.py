@@ -235,7 +235,7 @@ def train_filter(target, patients, diseases):
 				if disease not in disease_train:
 					disease_train[disease] = set()
 				disease_train[disease].add(patient.getMemID())
-		
+
 	# remove patient from train set
 
 	return patient_train, disease_train
@@ -268,18 +268,16 @@ def implementCARE(target, patients, diseases, disease_codes):
 		return total_sum
 
 
-	"""def w(a, i):
-		total_sum = 0
-		for j in diseases.keys():
-			first_half = (f(j) * vote(a, j)) / math.sqrt(sum(f(k)**2 * vote(a, k)**2 for k in a.getUnique()))
-			second_half = (f(j) * vote(i, j)) / math.sqrt(sum(f(k)**2 * vote(i, k)**2 for k in i.getUnique()))
-			total_sum += first_half * second_half
-		return total_sum
-	"""
-
 	### PREDICTION SCORE ###
 	def V(j):
 		return (1.0) * len(diseases[j]) / len(patients)
+
+	def V_C(j, c):
+		# this function needs to get the patients with disease j within the c group
+		# so ,find the diseases[c], and find the same of diseases[j] as well
+
+		#combined = diseases[j] & diseases[c]
+		return (1.0) * len(diseases[j] & diseases[c]) / len(patients)
 
 	def K(a):
 		return 1.0 / (sum(w(a, i) for i in patients.values()))
@@ -287,19 +285,71 @@ def implementCARE(target, patients, diseases, disease_codes):
 	def p(a, j):
 		return V(j) + K(a) * (1.0 - V(j)) * (sum(w(a, patients[i]) for i in diseases[j]))
 
-	### BEGIN PREDICTION ###
-	# TODO: need to fix & filter diseases to the train_set
-	#print(p(target, '6961'))
-	disease_score = []
-	for disease in diseases.keys():
-		score = p(target, disease)
-		disease_score.append([score, disease])
-	
-	disease_score.sort(key = lambda x: x[0], reverse=True)
+	def z(j, c):
+		
+		def S(p):
+			n1 = len(diseases[c])
+			n2 = len(patients)
+			return math.sqrt( (p * (1.0 - p) / n1) + (p * (1.0 - p) / n2) )
 
+		#sample1 = len(diseases[j] & diseases[c])
+		#sample2 = len(diseases[j])
+		p1 = V_C(j, c)
+		p2 = V(j)
+		weighted_avg = (p1 + p2) / 2
+		score = (p1 - p2) / S(weighted_avg)
+		return score
+
+	def ICARE(a):
+		superlist = {}
+		for j in diseases.keys():
+			max_score = 0
+			for c in target.getUnique():
+				if j == c:
+					continue
+				if z(j, c) >= 1.96 or z(j, c) <= -1.96:
+					if j not in superlist:
+						superlist[j] = set()
+					superlist[j].add(c)
+
+		disease_score = []
+		norm_constant = K(a)
+		for key, value in superlist.iteritems():
+			max_score = 0
+			for disease in value:
+				combined = diseases[key] & diseases[disease]
+				current_score = V_C(key, disease) + norm_constant * (1.0 - V_C(key, disease)) * (sum(w(a, patients[i]) for i in combined))
+				if current_score > max_score:
+					max_score = current_score
+			disease_score.append([max_score, key])
+
+		return disease_score
+
+	def CARE(a):
+		disease_score = []
+		for disease in diseases.keys():
+			score = p(a, disease)
+			disease_score.append([score, disease])
+		
+		return disease_score
+
+
+	
+	### BEGIN PREDICTION ###
+	
+	disease_score = []
+	#disease_score = CARE(target)
+	#print(z('6961', '27509'))
+	#print(z('6961', '30000'))
+	#print(V_C('6961','30000'))
+	#print(V('6961'))
+	#print(z('6961', 'V700'))
+
+	disease_score = ICARE(target)
+	#disease_score = CARE(target)
+	disease_score.sort(key = lambda x: x[0], reverse=True)
 	return disease_score
-	#patient_one = patients['281851294']
-	#print(w(target, patient_one))
+
 
 
 def printPatient(patient, dic):
@@ -325,11 +375,14 @@ def Main():
 	patients, diseases, disease_codes, dic, better_dic = setupCARE(file1)
 	
 	# target patient
-	patient_zero = Patient('1', '0', '57', ['7020', '6989', '73300'], '05/31/1994')
+	patient_zero = Patient('1', '0', '60', ['27509', '30000', 'V700'], '05/31/1994')
 
 	# filter patients for training set, and filter diseases too
 	
-	patient_train, disease_train = train_filter(patient_zero, patients, diseases)
+	#patient_train, disease_train = train_filter(patient_zero, patients, diseases)
+
+	patient_train = patients
+	disease_train = diseases
 
 	# CARE implementation
 	predDisease = implementCARE(patient_zero, patient_train, disease_train, disease_codes)
