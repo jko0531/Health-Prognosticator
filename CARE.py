@@ -1,5 +1,44 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+File: CARE.py
+Project: My Health Prognosticator
+Team: Team 5k
+Org: Optum Technology Development Program Summer 2016
+Creator: Jason Ko
+Date: July 27 2016
+Last Updated: August 5 2016
+Related files:
+    $dxref 2015.csv - This is a file provided by HCUP, allows us to identify icd9 codes
+    				  with a readable description of the disease
+
+    file.csv		- This is the patient history file you want to parse. 
+    				  Should contain the following columns:
+    				  { Member System ID, Adjudication Date, Patient Birth Date,
+						Patient Gender Code, Diagnosis One Code,
+						Diagnosis Two Code, Diagnosis Three Code,
+						Diagnosis Four Code, Diagnosis Five Code }
+Description:
+        This is a python library that projects potential future diseases of a patient based on the 
+        past histories of other patients. Based on the research paper "Time to CARE: 
+        a collaborative engine for practical disease prediction"
+
+How to import library:
+
+	from CARE import CARE, Patient
+
+Initialization steps:
+- Must define file name and place files in correct folder
+- The '$dxref 2015.csv' file must be in the same folder as this program
+- Create a target patient to make predictions on
+
+"""
+
+
+
 
 # ------------------------------- IMPORTS ---------------------------------#
+
 import numpy as np
 import pandas as pd
 import time
@@ -8,11 +47,23 @@ import sys
 import csv
 from datetime import date, datetime
 
+
 # ------------------------------- CLASSES ---------------------------------#
 
 class Visit:
 	
-	"""Holds information about a visit for each patient"""
+	"""Holds information about a visit for each patient
+	
+	MEMBER VARIABLES
+	visit - list of disease codes
+	adj_date - The adjudication date of the visit
+
+	FUNCTIONS
+	getVisit() - returns the list of disease codes
+	getDate() - return the adjudication date for this visit
+
+	"""
+
 
 	def __init__(self, adj_date, visit):
 		self.visit = visit
@@ -34,6 +85,14 @@ class Patient:
 	mem_id - The member ID of each patient
 	Gender - 0 = Male, 1 = Female
 	Age - This is pretty obvious
+
+	FUNCTIONS
+	getMemID() - returns the member id of the patient
+	getGender() - returns the gender of the patient
+	getAge() - returns the age of the patient
+	getVisits() - returns the list of visit objects
+	getUnique() - returns the set of disease codes by the patient
+	addVisit(adj_date, visit) - adds a visit object to the list of visits
 
 	"""
 
@@ -69,6 +128,78 @@ class Patient:
 
 
 class CARE:
+	
+	"""The CARE library. The meat of the program that analyzes 
+	   and generates predictions about future diseases a patient may develop, 
+	   based on the experiences of other similar patients.
+
+	   There are 3 methods of the CARE framework. They are:
+
+	   		CARE - The basic implementation of collaborative filtering
+
+	   		ICARE - Iterative CARE that places patients into individual disease groups and applies
+	   				collaborative filtering on each disease group and aggregates the results
+
+	   		Time-sensitive ICARE - A time sensitive ICARE system which exploits the temporal pattern in
+	   							   which diseases occur, using the length of time between patient visits.
+
+
+		MEMBER VARIABLES
+		patients - List of patients in the form of a dictionary { patient mem_id : patient object }
+		diseases - List of diseases with patients that have that disease {icd9 code : list of patients that have that disease }
+		disease_codes - List of all disease codes
+		dic - Dictionary that maps the icd9 code with a readable description of that code
+
+
+		FUNCTIONS
+		getPatients() - returns the list of patients
+		getDiseases() - returns the list of diseases
+		getDiseaseCodes() - returns the list of disease codes
+		getDic() - returns the dictionary
+
+		setupCARE(file) 
+			- Sets up CARE by parsing the patient data file, and creating the patient
+			  and disease database for prediction analysis
+
+		train(target_patient) 
+			- Trains the database based on the target patient, returns the list of the trained patient data
+				(training involves filtering out patients that 
+				 have less than 2 common diseases with the target patient)
+
+		evaluate(target_patient, patient_set, disease_set, mode) 
+			- evaluates and applies the desired method onto the data, and returns a list of
+			  future predicted diseases for the patient
+			- The three modes are: 'CARE', 'ICARE', 'TIME_ICARE'
+
+		predict(target_patient, mode)
+			- A helper function that calls evaluate and ranks the list
+			  of predicted diseases, and prints the top 10 predicted diseases
+			- This method is intended to be called by the user, as it is easy and simple to use
+
+		printPatient(patient, dictionary)
+			- Outputs the list of diseases belonging to the patient
+
+		printDiseases(patient, disease_predictions, dictionary)
+			- Outputs the top 10 predicted diseases for the patient in ranked order
+
+		**COMING SOON**
+		accuracy(mode)
+			- Displays the accuracy of the given dataset comparing predicted diseases with those that actually
+			  happen in the patient
+
+		USAGE
+		
+		1. To begin using this library, first initialize the CARE object
+			eg) careObj = CARE(file)
+
+		2. Initialze the patient that you want to make predictions on
+			eg) target_patient = Patient('000001', '0', '35', ['27509', '30000', 'V700'], '05/31/2013')
+
+		3. Finally, you can make predictions, based on the desired method
+			eg) careObj.predict(target_patient, 'ICARE')
+
+
+	"""
 
 	def __init__(self, filename):
 		self.patients, self.diseases, self.disease_codes, self.dic = self.setupCARE(filename)
@@ -130,7 +261,6 @@ class CARE:
 
 			dictionary = {}
 
-			# parse the diagnosis codes file
 			count = 0
 			with open(categoryfile, 'rb') as csvfile:
 				datareader = csv.reader(csvfile)
@@ -196,7 +326,6 @@ class CARE:
 
 			return patients, diseases
 
-		#categoryfile = '$dxref 2015.csv'
 		df = cleanData(filename)
 		dic = parseCSV()
 		disease_codes = set(dic.keys())
@@ -223,9 +352,7 @@ class CARE:
 		return patient_train, disease_train
 
 
-
-	##### COLLABORATIVE FILTERING ALGORITHMS #####
-
+	##### COLLABORATIVE FILTERING #####
 	def evaluate(self, a, patient_set, disease_set, mode):
 
 		def w(a, i):
@@ -264,9 +391,6 @@ class CARE:
 			score = (p1 - p2) / S(self, weighted_avg)
 			return score
 
-		#def p(self, j):
-		#		return V(self, j) + K(self, a) * (1.0 - V(self, j)) * (sum(w(a, patient_set[i]) for i in disease_set[j]))
-
 		def getCARE(self):
 			disease_score = []
 			norm_constant = K(self, a)
@@ -301,9 +425,8 @@ class CARE:
 		disease_score.sort(key = lambda x: x[0], reverse=True)
 		return disease_score
 
-	##############################################
-	##### 
 
+	##### HELPER FUNCTION TO PREDICT #####
 	def predict(self, target, mode):
 
 		# Filter the data for training sets
@@ -320,10 +443,7 @@ class CARE:
 		self.printDiseases(target, disease_score[:20], self.dic)
 
 
-	##############################################
-
 	##### PRINT FUNCTIONS #####
-
 	def printPatient(self, patient, dic):
 		count = 1
 		print('The patient has the following diseases:')
@@ -331,7 +451,6 @@ class CARE:
 			print('\t%d. ' %count + dic[disease] + ' (' + disease + ')')
 			count+=1
 		print('\n')
-
 
 	def printDiseases(self, patient, predDisease, dic):
 		count = 1
@@ -347,8 +466,6 @@ class CARE:
 			if count == 11:
 				break
 		print('\n')
-
-	###########################
 
 
 	##### EVALUATION FUNCTIONS #####
@@ -391,7 +508,4 @@ class CARE:
 			second_part += numerator/denominator
 
 		return first_part * second_part
-
-
-
 
