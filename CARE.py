@@ -264,13 +264,14 @@ class CARE:
 			score = (p1 - p2) / S(self, weighted_avg)
 			return score
 
-		def p(self, j):
-				return V(self, j) + K(self, a) * (1.0 - V(self, j)) * (sum(w(a, patient_set[i]) for i in disease_set[j]))
+		#def p(self, j):
+		#		return V(self, j) + K(self, a) * (1.0 - V(self, j)) * (sum(w(a, patient_set[i]) for i in disease_set[j]))
 
 		def getCARE(self):
 			disease_score = []
+			norm_constant = K(self, a)
 			for disease in disease_set.keys():
-				score = p(self, disease)
+				score = V(self, disease) + norm_constant * (1.0 - V(self, disease)) * (sum(w(a, patient_set[i]) for i in disease_set[disease]))
 				disease_score.append([score, disease])
 			return disease_score
 
@@ -296,15 +297,16 @@ class CARE:
 		
 		elif mode == 'ICARE':
 			disease_score = getICARE(self)
-
+		
+		disease_score.sort(key = lambda x: x[0], reverse=True)
 		return disease_score
 
 	##############################################
-	
+	##### 
 
 	def predict(self, target, mode):
 
-		# Filter the data first
+		# Filter the data for training sets
 		if mode == 'CARE':
 			patient_train, disease_train = self.train(target)
 		else:
@@ -312,7 +314,7 @@ class CARE:
 			disease_train = self.diseases
 
 		disease_score = self.evaluate(target, patient_train, disease_train, mode)
-		disease_score.sort(key = lambda x: x[0], reverse=True)
+		
 
 		self.printPatient(target, self.dic)
 		self.printDiseases(target, disease_score[:20], self.dic)
@@ -333,14 +335,63 @@ class CARE:
 
 	def printDiseases(self, patient, predDisease, dic):
 		count = 1
-		print('The patient has a possibility of getting the following 10 diseases:')
+		print('The patient has a possibility of getting the following diseases:')
 		for disease in predDisease:
 			if disease[1] in patient.getUnique():
 				continue
+			if disease[0] <= 0.0:
+				break
 			print('\t%d. ' %count + dic[disease[1]] + ' (' + disease[1] + \
 				  ') -- ' + '{0:.2f}'.format(disease[0]))
 			count+=1
 			if count == 11:
-				return
+				break
+		print('\n')
 
 	###########################
+
+
+	##### EVALUATION FUNCTIONS #####
+
+	def accuracy(self, mode):
+
+		def p(k):
+			return 2.0**((-1.0 * k)/a)
+
+		def delta(i, k, R):
+			if R[k][1] in i.getUnique():
+				return 1.0
+			else:
+				return 0.0
+
+		N = self.patients.values()[0:30]
+		a = 5
+		first_part = 100.0/len(N)
+		second_part = 0
+
+		for patient in N:
+			
+			if mode == 'CARE':
+				patient_train, disease_train = self.train(patient)
+			else:
+				patient_train = self.patients
+				disease_train = self.diseases
+			if len(patient_train) == 0 or len(disease_train) == 0:
+				continue
+
+			R = self.evaluate(patient, patient_train, disease_train, mode)
+			M = []
+			for index in range(len(R)):
+				if delta(patient, index, R) == 1:
+					M.append(R[index][1])
+
+
+			numerator = sum( (p(k) * delta(patient, k, R)) for k in range(len(R)) )
+			denominator = sum( p(k) for k in range(len(M)) )
+			second_part += numerator/denominator
+
+		return first_part * second_part
+
+
+
+

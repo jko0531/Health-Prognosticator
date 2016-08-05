@@ -8,6 +8,7 @@ file3 = 'file3.csv'
 patient_zero = Patient('1', '0', '60', ['27509', '30000', 'V700'], '05/31/1994')
 
 careobj = CARE(file1)
-careobj.predict(patient_zero, 'ICARE')
+#careobj.predict(patient_zero, 'CARE')
+#print(careobj.accuracy('ICARE'))
 
 print('--- %s seconds ---' %(time.time() - start_time))

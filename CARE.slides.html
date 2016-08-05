@@ -252,7 +252,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="COLLABORATIVE-FILTERING">COLLABORATIVE FILTERING<a class="anchor-link" href="#COLLABORATIVE-FILTERING">&#182;</a></h1><h2 id="Inspired-by-the-research-paper">Inspired by the research paper<a class="anchor-link" href="#Inspired-by-the-research-paper">&#182;</a></h2><h2 id="&quot;Time-to-CARE:-a-collaborative-engine-for-practical-disease-prediction&quot;">"Time to CARE: a collaborative engine for practical disease prediction"<a class="anchor-link" href="#&quot;Time-to-CARE:-a-collaborative-engine-for-practical-disease-prediction&quot;">&#182;</a></h2>
+<h1 id="COLLABORATIVE-FILTERING">COLLABORATIVE FILTERING<a class="anchor-link" href="#COLLABORATIVE-FILTERING">&#182;</a></h1><h3 id="Inspired-by-the-research-paper">Inspired by the research paper<a class="anchor-link" href="#Inspired-by-the-research-paper">&#182;</a></h3><h3 id="&quot;Time-to-CARE:-a-collaborative-engine-for-practical-disease-prediction&quot;">"Time to CARE: a collaborative engine for practical disease prediction"<a class="anchor-link" href="#&quot;Time-to-CARE:-a-collaborative-engine-for-practical-disease-prediction&quot;">&#182;</a></h3>
 </div>
 </div>
 </div></section></section><section><section>
@@ -288,7 +288,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Applying-it-to-healthcare-data,-we-can-generate-predictions-on-other-diseases-based-on-a-subset-of-similar-patients"><em>Applying it to healthcare data, we can generate predictions on other diseases based on a subset of similar patients</em><a class="anchor-link" href="#Applying-it-to-healthcare-data,-we-can-generate-predictions-on-other-diseases-based-on-a-subset-of-similar-patients">&#182;</a></h4>
+<h4 id="Well-suited-to-disease-prediction-due-to-the-known-collaborative-nature-of-diseases"><em>Well suited to disease prediction due to the known collaborative nature of diseases</em><a class="anchor-link" href="#Well-suited-to-disease-prediction-due-to-the-known-collaborative-nature-of-diseases">&#182;</a></h4>
 </div>
 </div>
 </div></div><div class="fragment">
@@ -297,7 +297,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Well-suited-to-disease-prediction-due-to-the-known-collaborative-nature-of-diseases"><em>Well suited to disease prediction due to the known collaborative nature of diseases</em><a class="anchor-link" href="#Well-suited-to-disease-prediction-due-to-the-known-collaborative-nature-of-diseases">&#182;</a></h4>
+<h4 id="Applying-it-to-healthcare-data,-we-can-generate-predictions-on-other-diseases-based-on-a-subset-of-similar-patients"><em>Applying it to healthcare data, we can generate predictions on other diseases based on a subset of similar patients</em><a class="anchor-link" href="#Applying-it-to-healthcare-data,-we-can-generate-predictions-on-other-diseases-based-on-a-subset-of-similar-patients">&#182;</a></h4>
 </div>
 </div>
 </div></div></section></section><section><section>
@@ -336,17 +336,7 @@ a.anchor-link {
 <dt>3. Time-sensitive ICARE</dt>
 </div>
 </div>
-</div></div></section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Work-Flow">Work Flow<a class="anchor-link" href="#Work-Flow">&#182;</a></h1><p><img src="Diagram.png" alt="diagram"></p>
-
-</div>
-</div>
-</div></section></section><section><section>
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -367,7 +357,7 @@ a.anchor-link {
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">class</span> <span class="nc">Patient</span><span class="p">:</span>
@@ -376,7 +366,7 @@ a.anchor-link {
 <span class="sd">    </span>
 <span class="sd">    MEMBER VARIABLES</span>
 <span class="sd">    visits - list of visit objects</span>
-<span class="sd">    mem_id - The member ID of each patient</span>
+<span class="sd">    mem_id - The encrypted member ID of each patient</span>
 <span class="sd">    Gender - 0 = Male, 1 = Female</span>
 <span class="sd">    Age - This is pretty obvious</span>
 
@@ -387,7 +377,6 @@ a.anchor-link {
         <span class="bp">self</span><span class="o">.</span><span class="n">mem_id</span> <span class="o">=</span> <span class="n">mem_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="n">gender</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
-        <span class="c1">#v = Visit(adj_date, visit)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">visits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="n">adj_date</span><span class="p">,</span> <span class="n">visit</span><span class="p">))</span>
         
 
@@ -433,7 +422,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>tbd</p>
+<p><img src="Data_Example.png" alt="diagram"></p>
 
 </div>
 </div>
@@ -488,18 +477,23 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Create-our-example-patient-to-be-used-as-the-target">Create our example patient to be used as the target<a class="anchor-link" href="#Create-our-example-patient-to-be-used-as-the-target">&#182;</a></h1>
+<h1 id="Create-our-example-patients-to-be-used-as-the-targets">Create our example patients to be used as the targets<a class="anchor-link" href="#Create-our-example-patients-to-be-used-as-the-targets">&#182;</a></h1>
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">patient_zero</span> <span class="o">=</span> <span class="n">Patient</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;57&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;27509&#39;</span><span class="p">,</span> <span class="s1">&#39;30000&#39;</span><span class="p">,</span> <span class="s1">&#39;V700&#39;</span><span class="p">],</span> <span class="s1">&#39;05/31/1994&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#              Patient(ID, Gender, Age, diagnosis_list, adjudication_date)</span>
+<span class="n">patient_zero</span> <span class="o">=</span> <span class="n">Patient</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;57&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;78071&#39;</span><span class="p">,</span> <span class="s1">&#39;7824&#39;</span><span class="p">,</span> <span class="s1">&#39;78321&#39;</span><span class="p">],</span> <span class="s1">&#39;05/31/2013&#39;</span><span class="p">)</span>
+
+<span class="n">patient_one</span> <span class="o">=</span> <span class="n">Patient</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;60&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;7575&#39;</span><span class="p">,</span> <span class="s1">&#39;71956&#39;</span><span class="p">,</span> <span class="s1">&#39;7829&#39;</span><span class="p">],</span> <span class="s1">&#39;06/13/2012&#39;</span><span class="p">)</span>
 
 <span class="n">care</span><span class="o">.</span><span class="n">printPatient</span><span class="p">(</span><span class="n">patient_zero</span><span class="p">,</span> <span class="n">care</span><span class="o">.</span><span class="n">getDic</span><span class="p">())</span>
+
+<span class="n">care</span><span class="o">.</span><span class="n">printPatient</span><span class="p">(</span><span class="n">patient_one</span><span class="p">,</span> <span class="n">care</span><span class="o">.</span><span class="n">getDic</span><span class="p">())</span>
 </pre></div>
 
 </div>
@@ -513,9 +507,15 @@ a.anchor-link {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The patient has the following diseases:
-	1. ROUTINE MEDICAL EXAM (V700)
-	2. Disord iron metablsm NEC (Begin 2010) (27509)
-	3. ANXIETY STATE NOS (30000)
+	1. CHR FATIGUE SYNDR (Begin 1998) (78071)
+	2. LOSS OF WEIGHT (Begin 2000) (78321)
+	3. JAUNDICE NOS (7824)
+
+
+The patient has the following diseases:
+	1. INTEGUMENT TISS SYMP NEC (7829)
+	2. NAIL ANOMALIES NEC (7575)
+	3. JT STIFFNESS NEC-L/LEG (71956)
 
 
 </pre>
@@ -525,6 +525,15 @@ a.anchor-link {
 </div>
 </div>
 
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Patient-zero-has-heavy-symptoms-of-cirrhosis-(6961)"><em>Patient zero has heavy symptoms of cirrhosis (6961)</em><a class="anchor-link" href="#Patient-zero-has-heavy-symptoms-of-cirrhosis-(6961)">&#182;</a></h4><h4 id="Patient-one-has-heavy-symptoms-of-psoriasis-(5715)"><em>Patient one has heavy symptoms of psoriasis (5715)</em><a class="anchor-link" href="#Patient-one-has-heavy-symptoms-of-psoriasis-(5715)">&#182;</a></h4>
+</div>
+</div>
 </div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -537,7 +546,7 @@ a.anchor-link {
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">patient_train</span><span class="p">,</span> <span class="n">disease_train</span> <span class="o">=</span> <span class="n">care</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">patient_zero</span><span class="p">)</span>
@@ -557,7 +566,38 @@ a.anchor-link {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Length of patient set before training: 66370
-Length of patient set after training: 70
+Length of patient set after training: 6
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">patient_train</span><span class="p">,</span> <span class="n">disease_train</span> <span class="o">=</span> <span class="n">care</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">patient_one</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Length of patient set before training: </span><span class="si">%d</span><span class="s1">&#39;</span>  <span class="o">%</span><span class="k">len</span>(care.getPatients()))
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Length of patient set after training: </span><span class="si">%d</span><span class="s1">&#39;</span>  <span class="o">%</span><span class="k">len</span>(patient_train))
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Length of patient set before training: 66370
+Length of patient set after training: 0
 </pre>
 </div>
 </div>
@@ -577,7 +617,7 @@ Length of patient set after training: 70
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">care</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">patient_zero</span><span class="p">,</span> <span class="s1">&#39;CARE&#39;</span><span class="p">)</span>
@@ -594,22 +634,55 @@ Length of patient set after training: 70
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The patient has the following diseases:
-	1. ROUTINE MEDICAL EXAM (V700)
-	2. Disord iron metablsm NEC (Begin 2010) (27509)
-	3. ANXIETY STATE NOS (30000)
+	1. CHR FATIGUE SYNDR (Begin 1998) (78071)
+	2. LOSS OF WEIGHT (Begin 2000) (78321)
+	3. JAUNDICE NOS (7824)
 
 
-The patient has a possibility of getting the following 10 diseases:
-	1. CIRRHOSIS OF LIVER NOS (5715) -- 0.99
-	2. OTHER PSORIASIS (6961) -- 0.80
-	3. LONGTERM USE OTH MED (Begin 1995) (V5869) -- 0.42
-	4. ENCEPHALOPATHY- UNSPECIFIED (Begin 2003) (34830) -- 0.40
-	5. Hemochromatos-rbc trans (Begin 2010) (27502) -- 0.40
-	6. CLOSED SKULL VAULT FX (80000) -- 0.40
-	7. SCREEN MALIG PROSTATE (Begin 1998) (V7644) -- 0.34
-	8. CHR HEPAT C W/O COMA (Begin 1994) (07054) -- 0.33
-	9. ELEV BL PRES W/O HYPERTN (7962) -- 0.33
-	10. AC FRONTAL SINUSITIS (4611) -- 0.33
+The patient has a possibility of getting the following diseases:
+	1. CIRRHOSIS OF LIVER NOS (5715) -- 0.95
+	2. HEPATIC COMA (5722) -- 0.80
+	3. ALCOHOL CIRRHOSIS LIVER (5712) -- 0.65
+	4. PORTAL HYPERTENSION (5723) -- 0.59
+	5. HYPERTENSION NOS (4019) -- 0.50
+	6. ASCITES NEC (Begin 2007) (78959) -- 0.49
+	7. ALCOH DEP NECNOS-UNSPEC (30390) -- 0.49
+	8. ABDOM PAIN NOS (Begin 1994) (78900) -- 0.49
+	9. ESOPH VARICE OTH DIS NOS (45621) -- 0.44
+	10. MORBID OBESITY (Begin 1995) (27801) -- 0.44
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">care</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">patient_one</span><span class="p">,</span> <span class="s1">&#39;CARE&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The patient has the following diseases:
+	1. INTEGUMENT TISS SYMP NEC (7829)
+	2. NAIL ANOMALIES NEC (7575)
+	3. JT STIFFNESS NEC-L/LEG (71956)
+
+
+The patient has a possibility of getting the following diseases:
 </pre>
 </div>
 </div>
@@ -629,7 +702,7 @@ The patient has a possibility of getting the following 10 diseases:
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">care</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">patient_zero</span><span class="p">,</span> <span class="s1">&#39;ICARE&#39;</span><span class="p">)</span>
@@ -646,22 +719,22 @@ The patient has a possibility of getting the following 10 diseases:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The patient has the following diseases:
-	1. ROUTINE MEDICAL EXAM (V700)
-	2. Disord iron metablsm NEC (Begin 2010) (27509)
-	3. ANXIETY STATE NOS (30000)
+	1. CHR FATIGUE SYNDR (Begin 1998) (78071)
+	2. LOSS OF WEIGHT (Begin 2000) (78321)
+	3. JAUNDICE NOS (7824)
 
 
-The patient has a possibility of getting the following 10 diseases:
-	1. OTHER PSORIASIS (6961) -- 0.61
-	2. HYPERLIPIDEMIA NEC/NOS (2724) -- 0.10
-	3. HYPERTENSION NOS (4019) -- 0.07
-	4. BENIGN HYPERTENSION (4011) -- 0.07
-	5. CIRRHOSIS OF LIVER NOS (5715) -- 0.05
-	6. PSORIAS RELATED DIS NEC (6968) -- 0.04
-	7. DEPRESSIVE DISORDER NEC (311) -- 0.03
-	8. HYPOTHYROIDISM NOS (2449) -- 0.03
-	9. PURE HYPERCHOLESTEROLEM (2720) -- 0.03
-	10. LONGTERM USE OTH MED (Begin 1995) (V5869) -- 0.03
+The patient has a possibility of getting the following diseases:
+	1. CIRRHOSIS OF LIVER NOS (5715) -- 0.34
+	2. ALCOHOL CIRRHOSIS LIVER (5712) -- 0.19
+	3. ASCITES NEC (Begin 2007) (78959) -- 0.17
+	4. OTHER PSORIASIS (6961) -- 0.13
+	5. PORTAL HYPERTENSION (5723) -- 0.09
+	6. HEPATIC COMA (5722) -- 0.08
+	7. ANEMIA NOS- (2859) -- 0.07
+	8. CHR HEPAT C W/O COMA (Begin 1994) (07054) -- 0.05
+	9. BILIARY CIRRHOSIS (5716) -- 0.05
+	10. ESOPH VARICES W/O BLEED (4561) -- 0.05
 </pre>
 </div>
 </div>
@@ -669,20 +742,108 @@ The patient has a possibility of getting the following 10 diseases:
 </div>
 </div>
 
-</div>
+</div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">care</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">patient_one</span><span class="p">,</span> <span class="s1">&#39;ICARE&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div></div></section></section>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The patient has the following diseases:
+	1. INTEGUMENT TISS SYMP NEC (7829)
+	2. NAIL ANOMALIES NEC (7575)
+	3. JT STIFFNESS NEC-L/LEG (71956)
+
+
+The patient has a possibility of getting the following diseases:
+	1. OTHER PSORIASIS (6961) -- 0.81
+	2. LONGTERM USE OTH MED (Begin 1995) (V5869) -- 0.02
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Advantages">Advantages<a class="anchor-link" href="#Advantages">&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Fast (~5 seconds to read in the data, train &amp; predict)</li>
+</ul>
+
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>No third party libraries (can be easily implemented in many languages)</li>
+</ul>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>algorithms that I implemented in the paper are simple, yet powerful</p>
+
+</div>
+</div>
+</div>
+</aside></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Ability to incorporate temporality to account for the ordering in which diseases occur</li>
+</ul>
+
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Thank-you">Thank you<a class="anchor-link" href="#Thank-you">&#182;</a></h1>
+</div>
+</div>
+</div></section></section>
 </div>
 </div>
 
