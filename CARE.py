@@ -359,19 +359,12 @@ class CARE:
 			
 			def f(self, j):
 				"""Returns: log(# of patients in database / # of patients with disease j)"""
-<<<<<<< HEAD
 				if j not in disease_set:
 					return 1.0
-=======
->>>>>>> edb8cad17596c2fbdbf65c461df64765c33fb1ce
 				return np.log( (1.0)*len(patient_set) / len(disease_set[j]) )
 
 			total_sum = 0
 			combined = a.getUnique() & i.getUnique()
-<<<<<<< HEAD
-			
-=======
->>>>>>> edb8cad17596c2fbdbf65c461df64765c33fb1ce
 			for disease in combined:
 				first_half = f(self, disease) / math.sqrt(sum(f(self, k)**2 for k in a.getUnique()))
 				second_half = f(self, disease) / math.sqrt(sum(f(self, k)**2 for k in i.getUnique()))
