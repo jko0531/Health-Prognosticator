@@ -2,10 +2,10 @@ from CARE import CARE, Patient
 import time
 
 start_time = time.time()
-file = '~/desktop/file1.csv'
+file = 'file1.csv'
 patient_one = Patient('2', '1', '60', ['7575', '71956', '7829'], '06/13/2012')
 
 careobj = CARE(file)
-careobj.predict(patient_one, 'CARE')
+careobj.predict(patient_one, 'ICARE')
 
 print('--- %s seconds ---' %(time.time() - start_time))

@@ -1,0 +1,36 @@
+Presentation Notes
+
+DIRK
+Hello. We are the My Health Prognosticator intern team.
+
+My health prognosticator is a predictive tool that allows UHG customers to foresee their future health. For example, a patient can input his/her own data and receive predictions on possible illnesses 5, 10, 20 years in the future.
+
+Throughout our 10 weeks here at optum, we have developed and implemented various machine learning algorithms that process and model patient data.
+
+We have created a short video to showcase MHP and our team dynamic as a whole.
+
+1st slide
+Now I would like to show you a somewhat unconventional method of predicting disease through machine learning techniques. This method is called Collaborative Filtering, and for the past few weeks I’ve been reading this research paper and I’ve implemented the algorithms discussed in the paper from scratch.
+
+2nd slide
+So I’ll give a brief introduction. Collaborative filtering is a recommender system designed to predict the preferences of a person based on the preferences of other similar users. If any of you have used netflix or amazon before, its sort of like seeing items or movies that show up on your homepage under the section “things you might enjoy”. This technique is based on the assumption that similar people will enjoy similar things. You may think this is kind of weird, seeing that you are essentially recommending a disease to someone else based on their preferences. But in fact, this is actually well suited to disease prediction because of the known collaborative nature of diseases. This allows us to generate accurate predictions on diseases based on other similar patients.
+
+3rd slide
+There are three main methods in the CARE framework. There is the basic CARE method, which employs standard collaborative filtering algorithms to obtain weights and create a prediction score on possible diseases based on the patient. Then, there is iterative CARE (ICARE for short) which groups patients into separate disease groups, based on the diseases they have already developed, and aggregates the sum of the prediction scores. The third one, time-sensitive ICARE, seeks to take into account the length of time between each patient visit to analyze patterns in the ordering in which diseases occur. We were not able to test out ICARE, because the data we were given did not span a length of time. So the focus of our experiments were on CARE and ICARE. One thing to note is that, like many other machine learning algorithms, there is a training process involved where we filter out patients that have little or no similarity with the target patient we are trying to predict. The rule to this is that patients must have at least 2 diseases in common with the target patient. However, this training process is only required in basic CARE, and not ICARE or time-sensitive ICARE. This is because the algorithm already groups patients into separate disease groups. From this, we can see that the ICARE methods are superior to basic CARE, and in practice, we’ll solely be using either ICARE or time-sensitive ICARE to make predictions.
+
+4th slide
+Here we will artificially create patients that we want to predict diseases. We’ll call our first patient “patient zero”, and give him heavy symptoms of cirrhosis. We’ll give our second patient “patient one” heavy symptoms of psoriasis. These symptoms are exclusive of each other. 
+
+5th slide
+Here we make our CARE predictions. It isn’t shown, but our data has already gone through the training process and filtered out noise from the dataset. You can see that both predictions came up accurate with each patient projecting either cirrhosis or psoriasis. However, upon closer inspection, we can see that patient zero has abnormally high prediction scores on each disease. This is due to the fact that our dataset is highly unbalanced, since each patient will have either cirrhosis or psoriasis. And you can see that patient one’s prediction scores come up as NaN. This is because the filtered data set only came up with one similar patient to patient one, and because of the underlying algorithms in collaborative filtering, there was a divide by zero calculation which resulted in a NaN. This is also due to our unbalanced and unvaried dataset. This is further proof that iterative care is much more flexible and viable than standard CARE implementation.
+
+6th slide
+Here is the result of ICARE predictions. We can see that the predictions are far more evenly weighted, and they give us the accurate predictions of cirrhosis or psoriasis. 
+
+
+Conclusion
+There are many advantages to using this system as opposed to conventional machine learning algorithms. First off, this system is fast and scalable. It takes about 15 seconds to read in a data file with 1 million rows. So theoretically, for 10 million rows it would take 2 and a half minutes, and for 100 million rows, 25 minutes. And if we can save our data into a database, accessing this data can be very quick. This is a huge advantage to, lets say, a neural network, which may take hours to train a dataset this large.
+
+Second, there were no third party libraries necessary to implement CARE. Typically, one would use a third party library such as python’s scikit-learn to implement various machine learning algorithms. With CARE, the algorithms within Collaborative Filtering are simple, yet extremely powerful. This allows our CARE framework to be portable and easily implemented in other languages on other platforms.
+Lastly, the CARE framework can take into account the length of time between patient visits to utilize the pattern that diseases occur. This cannot be done with traditional machine learning algorithms, and is unique to the structure that is built with CARE. With Optum’s large, diverse dataset, we can differentiate between chronic disease and lone occurrence.
+
