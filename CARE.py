@@ -250,7 +250,7 @@ class CARE:
 
 			return df
 
-		def parseCSV(categoryfile='$dxref 2015.csv'):
+		def parseCSV(categoryfile='data/$dxref 2015.csv'):
 			"""
 			USAGE
 			categoryfile - The file provided by HCUP. Should be called '$dxref 2015.csv'
